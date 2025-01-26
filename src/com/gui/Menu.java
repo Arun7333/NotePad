@@ -13,16 +13,13 @@ public class Menu {
 
     Menu(String menuName){
         menu = new JMenu(menuName);
+
         menuItems = new HashMap<>();
     }
 
-    public void addMenuItems(List<String> items){
-
-        for(String itemName : items){
-            JMenuItem newItem = new JMenuItem(itemName);
-            menu.add(newItem);
-            menuItems.put(itemName, newItem);
-        }
+    public void addItem(JMenuItem newItem){
+        menu.add(newItem);
+        menuItems.put(newItem.getName(), newItem);
     }
 
     public JMenu getMenuObject(){

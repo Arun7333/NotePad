@@ -14,14 +14,14 @@ public class MenuBar {
         menus = new HashMap<>();
     }
 
-    public void addMenus(Map<String, List<String>> menus){
+    public void addMenus(Map<String, List<JMenuItem>> menus){
 
-        for(Map.Entry<String, List<String>> entry : menus.entrySet()){
+        for(Map.Entry<String, List<JMenuItem>> entry : menus.entrySet()){
             String menuName = entry.getKey();
-            List<String> menuItems = entry.getValue();
+            List<JMenuItem> menuItems = entry.getValue();
 
             Menu newMenu = new Menu(menuName);
-            newMenu.addMenuItems(menuItems);
+            menuItems.stream().forEach(item -> newMenu.addItem(item));
 
             menuBar.add(newMenu.getMenuObject());
             this.menus.put(menuName, newMenu);

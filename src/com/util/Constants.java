@@ -3,20 +3,29 @@ package com.util;
 import com.gui.GUI;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.*;
+import java.util.List;
 
 public class Constants {
     public static Map<String, List<JMenuItem>> MENU;
     private static Functions functions;
     private static String[] fontSizes;
     private static String[] fontStyles;
+    private static String[] colors;
+    public static Map<String, ColorDetails> colorDetails;
 
     static{
         MENU = new LinkedHashMap<>();
         fontSizes = new String[] {"8", "12", "18", "24", "28"};
         fontStyles = new String[] {"Arial", "Gill Sans MT", "Times New Roman"};
+        colors = new String[]{"White", "Black", "Blue"};
+        colorDetails = new HashMap<>();
+        colorDetails.put("White", new ColorDetails(Color.white, Color.black));
+        colorDetails.put("Black", new ColorDetails(Color.black, Color.white));
+        colorDetails.put("Blue", new ColorDetails(Color.blue, Color.yellow));
     }
 
     public static void setConstants(GUI gui){
@@ -84,11 +93,11 @@ public class Constants {
     }
 
     public static void addFileMenu(){
-        JMenuItem iNew = new JMenuItem("new");
-        JMenuItem iOpen = new JMenuItem("open");
-        JMenuItem iSave = new JMenuItem("save");
-        JMenuItem iSaveAs = new JMenuItem("save as");
-        JMenuItem iExit = new JMenuItem("exit");
+        JMenuItem iNew = new JMenuItem("New");
+        JMenuItem iOpen = new JMenuItem("Open");
+        JMenuItem iSave = new JMenuItem("Save");
+        JMenuItem iSaveAs = new JMenuItem("Save As");
+        JMenuItem iExit = new JMenuItem("Exit");
 
         iNew.addActionListener(new ActionListener() {
             @Override
@@ -129,15 +138,37 @@ public class Constants {
         MENU.put("File", Arrays.asList(iNew, iOpen, iSave, iSaveAs, iExit));
     }
 
-    public static void addEditMenu(){
+    public static void addColorMenu(){
+        List<JMenuItem> colorItems = new ArrayList<>();
+        ActionListener colorListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String command = e.getActionCommand();
+                functions.setColor(command);
+            }
+        };
 
+        for(String color : colors){
+            JMenuItem newColor = new JMenuItem(color);
+            newColor.setActionCommand(color);
+            newColor.addActionListener(colorListener);
 
-        MENU.put("Edit", Arrays.asList());
+            colorItems.add(newColor);
+        }
+
+        MENU.put("Color", colorItems);
     }
 
-    public static void addColorMenu(){
+    public static void addEditMenu(){
+        JMenuItem iUndo = new JMenuItem("Undo");
+        JMenuItem iRedo = new JMenuItem("Redo");
 
+        iUndo.setActionCommand("Undo");
+        iRedo.setActionCommand("Redo");
 
-        MENU.put("Color", Arrays.asList());
+        iUndo.addActionListener((e) -> functions.undo());
+        iRedo.addActionListener((e) -> functions.redo());
+
+        MENU.put("Edit", Arrays.asList(iUndo, iRedo));
     }
 }

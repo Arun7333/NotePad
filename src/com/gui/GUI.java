@@ -4,6 +4,9 @@ import com.util.Constants;
 import com.util.Functions;
 
 import javax.swing.*;
+import javax.swing.event.UndoableEditEvent;
+import javax.swing.event.UndoableEditListener;
+import javax.swing.undo.UndoManager;
 import java.awt.*;
 
 public class GUI {
@@ -11,8 +14,10 @@ public class GUI {
     private JTextArea textArea;
     private MenuBar menuBar;
     private Functions functions;
+    private UndoManager undoManager;
 
     public GUI(){
+        undoManager = new UndoManager();
         createWindow();
         createTextArea();
 
@@ -35,6 +40,15 @@ public class GUI {
     private void createTextArea(){
 
         textArea = new JTextArea();
+        textArea.getDocument().addUndoableEditListener(
+                new UndoableEditListener() {
+                    @Override
+                    public void undoableEditHappened(UndoableEditEvent e) {
+                        undoManager.addEdit(e.getEdit());
+                    }
+                }
+        );
+
         JScrollPane scrollPane = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setBorder(BorderFactory.createEmptyBorder());
 
@@ -67,5 +81,9 @@ public class GUI {
 
     public MenuBar getMenuBar(){
         return menuBar;
+    }
+
+    public UndoManager getUndoManager(){
+        return undoManager;
     }
 }

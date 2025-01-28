@@ -5,6 +5,7 @@ import com.gui.GUI;
 import javax.swing.*;
 import java.awt.*;
 import java.io.*;
+import java.util.Map;
 
 public class Functions {
     private GUI gui;
@@ -14,7 +15,6 @@ public class Functions {
     public String selectedFont;
     private int selectedFontSize;
 
-//    public Font arial, timeNewRoman, comicSans;
 
     public Functions(GUI gui){
         this.gui = gui;
@@ -110,9 +110,29 @@ public class Functions {
     }
 
     public void setFont(String fontName){
-
         selectedFont = fontName;
 
         gui.getTextArea().setFont(new Font(selectedFont, Font.PLAIN, selectedFontSize));
+    }
+
+    public void setColor(String colorName){
+        Color bgColor = Constants.colorDetails.get(colorName).backGroundColor;
+        Color fgColor = Constants.colorDetails.get(colorName).frontGroundColor;
+
+        gui.getWindow().getContentPane().setBackground(bgColor);
+        gui.getTextArea().setBackground(bgColor);
+        gui.getTextArea().setForeground(fgColor);
+    }
+
+    public void undo(){
+        if(gui.getUndoManager().canUndo()) {
+            gui.getUndoManager().undo();
+        }
+    }
+
+    public void redo(){
+        if(gui.getUndoManager().canRedo()) {
+            gui.getUndoManager().redo();
+        }
     }
 }

@@ -19,7 +19,7 @@ public class Menu {
 
     public void addItem(JMenuItem newItem){
         menu.add(newItem);
-        menuItems.put(newItem.getName(), newItem);
+        menuItems.put(newItem.getText(), newItem);
     }
 
     public JMenu getMenuObject(){

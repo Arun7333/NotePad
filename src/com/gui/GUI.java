@@ -13,10 +13,14 @@ public class GUI {
     private Functions functions;
 
     public GUI(){
-        Constants.setConstants(this);
         createWindow();
         createTextArea();
+
+        Constants.setConstants(this);
         createMenuBar();
+
+        window.revalidate();
+        window.repaint();
     }
 
     private void createWindow(){
@@ -39,10 +43,10 @@ public class GUI {
 
     private void createMenuBar(){
         menuBar = new MenuBar();
-        window.setJMenuBar(menuBar.getMenuBar());
+        menuBar.getMenuBar().setVisible(true);
 
         menuBar.addMenus(Constants.MENU);
-
+        window.setJMenuBar(menuBar.getMenuBar());
     }
 
     public Functions getFunctions(){
@@ -59,5 +63,9 @@ public class GUI {
 
     public JTextArea getTextArea(){
         return textArea;
+    }
+
+    public MenuBar getMenuBar(){
+        return menuBar;
     }
 }

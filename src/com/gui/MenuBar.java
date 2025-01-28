@@ -33,7 +33,6 @@ public class MenuBar {
     }
 
     public Menu getMenu(String menuName){
-        System.out.println(menuBar.getHelpMenu());
         return menus.get(menuName);
     }
 }
